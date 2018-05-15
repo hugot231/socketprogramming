@@ -273,9 +273,9 @@ def doLsClient(serverName, controlSock):
 
 	return buffer.split(',');
 
-# check usage
+# check usage of arguments
 if len(sys.argv) < 3:
-	print("USAGE: " + sys.argv[0] + " <server_machine> <server_port>");
+	print("USAGE: " + sys.argv[0] + " <server_name> <server_port>");
 	exit(-1)
 
 serverName = sys.argv[1];
