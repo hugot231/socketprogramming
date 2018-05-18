@@ -7,7 +7,7 @@ import sendrecv
 FILE_NAME = "created_server.txt"
 
 # the size of the file
-SIZE_SIZE = 11
+SIZE_SIZE = 10
 
 def getFileSizeMsg(size):
 
@@ -205,7 +205,7 @@ def doList():
 	return [f for f in os.listdir('.') if os.path.isfile(f)];
 #def doList
 
-def doPutServer(controlSocket):
+def put_func(controlSocket):
 
 	fileName = receiveDataString(controlSocket);
 
@@ -225,7 +225,7 @@ def doPutServer(controlSocket):
 
 	dataSock.close();
 	dataSockListen.close();
-#def doPutServer
+#def put_func
 
 def doGetServer(controlSocket):
 
@@ -323,15 +323,15 @@ while 1:
 
 		if command == "put":
 			print "The command was: ", command
-			#doPutServer(controlSocket);
+			put_func(controlSocket);
 
 		elif command == "get":
 			print "The command was: ", command
-			#doGetServer(controlSocket);
+			doGetServer(controlSocket);
 
 		elif command == "ls":
 			print "The command was: ", command
-			#doLsServer(controlSocket);
+			doLsServer(controlSocket);
 		elif command == "quit":
 			print "The command was: ", command
 			controlSocket.close();
