@@ -227,7 +227,7 @@ def put_func(controlSocket):
 	dataSockListen.close();
 #def put_func
 
-def doGetServer(controlSocket):
+def get_func(controlSocket):
 
 	fileName = receiveDataString(controlSocket);
 
@@ -246,27 +246,8 @@ def doGetServer(controlSocket):
 	dataSock.close();
 	dataSocketListen.close();
 
-def doGetServer(controlSock):
 
-	fileName = receiveDataString(controlSock);
-
-	(dataSocketListen, newPort) = makeSocket(0);
-
-	sendDataString(controlSock, str(newPort));
-
-	# Make it a welcome socket
-	dataSocketListen.listen(1);
-
-	# Accept the connection
-	(dataSock, addr) = dataSocketListen.accept();
-
-	sendDataFile(dataSock, fileName);
-
-	dataSock.close();
-	dataSocketListen.close();
-
-
-def doLsServer(controlSock):
+def ls_func(controlSock):
 
 	(dataSocketListen, newPort) = makeSocket(0);
 
@@ -293,6 +274,7 @@ if len(sys.argv) < 2:
 	print("USAGE: " + sys.argv[0] + " <PORT NUMBER>");
 	exit(-1)
 
+# port number is put in variable from arg vector
 portNum = int(sys.argv[1]);
 print "Port Number: ", portNum;
 
@@ -312,13 +294,12 @@ while 1:
 	# Reset the command
 	command = ""
 
-	###################REMOVE############
-
 	print "Client connected: ",  addr;
 
 	#command = receiveDataString(controlSocket);
 	while command != "quit":
 
+		# receives message from client and puts it in command
 		command = sendrecv.recvMsg(controlSocket)
 
 		if command == "put":
@@ -327,11 +308,11 @@ while 1:
 
 		elif command == "get":
 			print "The command was: ", command
-			doGetServer(controlSocket);
+			get_func(controlSocket);
 
 		elif command == "ls":
 			print "The command was: ", command
-			doLsServer(controlSocket);
+			ls_func(controlSocket);
 		elif command == "quit":
 			print "The command was: ", command
 			controlSocket.close();
